@@ -1,13 +1,17 @@
-// cSpell:ignore Matias, observacion, matias
+// cSpell:ignore Matias, observacion, matias, segunditos
 
 import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
+import Tablas from "./Tablas";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
   const [gastos_Carolina, setGastos_Carolina] = useState([]);
   const [total_Carolina, setTotal_Carolina] = useState(0);
   const [total_Matias, setTotal_Matias] = useState(0);
+
+  const [loading, setLoading] = useState(false);
 
   const subTotal = total_Matias + total_Carolina;
 
@@ -40,6 +44,7 @@ const Home = () => {
 
   const getGastos = async () => {
     try {
+      setLoading(true);
       const response = await fetch(Global.url_backend + "/" + "listado", {
         headers: {
           "Content-Type": "application/json",
@@ -60,109 +65,55 @@ const Home = () => {
         setGastos_Carolina(gastosCarolina);
         setGastos_Matias(gastosMatias);
       }
+      setLoading(false);
     } catch (error) {
       console.log("error", error);
     }
   };
   return (
     <div>
-      <button>Nuevo Gasto</button>
+      <Link to="/crear">
+        <button>Nuevo Gasto</button>
+      </Link>
       <button>Ver Gastos de Meses Anteriores</button>
 
       <hr />
-      <div className="tabla_general">
-        <table border={1}>
-          <thead>
-            <tr>
-              <th colSpan={5}>Carolina</th>
-            </tr>
-            <tr>
-              <th>Nº</th>
-              <th>Fecha</th>
-              <th>Lugar</th>
-              <th>Monto</th>
-              <th>Observación</th>
-            </tr>
-          </thead>
-          <tbody>
-            {gastos_Carolina.length >= 1 &&
-              gastos_Carolina.map((item, index) => {
-                return (
-                  <tr key={item._id}>
-                    <td>{index + 1}</td>
-                    <td>{item.fecha}</td>
-                    <td>{item.lugar}</td>
-                    <td style={{ textAlign: "right" }}>$ {item.monto}</td>
-                    <td>{item.observacion}</td>
-                  </tr>
-                );
-              })}
-            <tr>
-              <th colSpan={3} style={{ textAlign: "right" }}>
-                TOTAL:
-              </th>
-              <td colSpan={3} style={{ textAlign: "center" }}>
-                $ {total_Carolina}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table border={1}>
-          <thead>
-            <tr>
-              <th colSpan={5}>Matias</th>
-            </tr>
-            <tr>
-              <th>Nº</th>
-              <th>Fecha</th>
-              <th>Lugar</th>
-              <th>Monto</th>
-              <th>Observación</th>
-            </tr>
-          </thead>
-          <tbody>
-            {gastos_Matias.length >= 1 &&
-              gastos_Matias.map((item, index) => {
-                return (
-                  <tr key={item._id}>
-                    <td>{index + 1}</td>
-                    <td>{item.fecha}</td>
-                    <td>{item.lugar}</td>
-                    <td>$ {item.monto}</td>
-                    <td>{item.observacion}</td>
-                  </tr>
-                );
-              })}
-            <tr>
-              <th colSpan={3} style={{ textAlign: "right" }}>
-                TOTAL:
-              </th>
-              <td colSpan={3} style={{ textAlign: "center" }}>
-                $ {total_Matias}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {loading ? (
+        <p>Cargando Datos... Espero unos segunditos...</p>
+      ) : (
+        <Tablas
+          gastos_Carolina={gastos_Carolina}
+          gastos_Matias={gastos_Matias}
+          total_Carolina={total_Carolina}
+          total_Matias={total_Matias}
+        />
+      )}
+
       <hr />
       <div>
         <table border={1}>
-          <tr>
-            <th>Total Gastos Entre Los Dos</th>
-            <td>$ {subTotal}</td>
-          </tr>
-          <tr>
-            <th>Costo Para Cada Uno</th>
-            <td>$ {costo_cada_uno}</td>
-          </tr>
-          <tr>
-            <th>Diferencia Matias</th>
-            <td>$ {diferencia_matias}</td>
-          </tr>
-          <tr>
-            <th>Diferencia Carolina</th>
-            <td>$ {diferencia_carolina}</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>Total Gastos Entre Los Dos</th>
+              <td>$ {subTotal.toFixed(2)} </td>
+            </tr>
+            <tr>
+              <th>Costo Para Cada Uno</th>
+              <td>$ {costo_cada_uno.toFixed(2)}</td>
+            </tr>
+            <tr>
+              <th>Diferencia Matias</th>
+              <td style={{ color: diferencia_matias < 0 ? "red" : "black" }}>
+                $ {diferencia_matias.toFixed(2)}
+              </td>
+            </tr>
+            <tr>
+              <th>Diferencia Carolina</th>
+              <td style={{ color: diferencia_carolina < 0 ? "red" : "black" }}>
+                $ {diferencia_carolina.toFixed(2)}
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <hr />
