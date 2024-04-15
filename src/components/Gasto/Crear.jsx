@@ -3,8 +3,7 @@
 import useForm from "../../helpers/useForm";
 import { Link, useNavigate } from "react-router-dom";
 import { Global } from "../../helpers/Global";
-import { format } from "@formkit/tempo";
-import { useState } from "react";
+import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 
 const Crear = () => {
   const { form, changed } = useForm({});
@@ -15,11 +14,14 @@ const Crear = () => {
     e.preventDefault();
 
     let nuevo_gasto = form;
-    
 
     try {
       const confirmación = window.confirm(
-       `${nuevo_gasto.fecha}: ¿Esta seguro que quiere guardar un nuevo gasto de ${nuevo_gasto.pagadoPor}, en "${nuevo_gasto.lugar}" por $ ${nuevo_gasto.monto}?`
+        `${Fecha_Formateada(
+          nuevo_gasto.fecha
+        )}: ¿Esta seguro que quiere guardar un nuevo gasto de ${
+          nuevo_gasto.pagadoPor
+        }, en "${nuevo_gasto.lugar}" por $ ${nuevo_gasto.monto}?`
       );
 
       if (confirmación) {

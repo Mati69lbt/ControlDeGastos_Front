@@ -87,6 +87,9 @@ const Home = () => {
           gastos_Matias={gastos_Matias}
           total_Carolina={total_Carolina}
           total_Matias={total_Matias}
+          getGastos
+          setGastos_Matias={setGastos_Matias}
+          setGastos_Carolina={setGastos_Carolina}
         />
       )}
 

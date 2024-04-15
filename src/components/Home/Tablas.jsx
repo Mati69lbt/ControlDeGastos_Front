@@ -1,24 +1,51 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, formkit
+// cSpell:ignore Matias, observacion, matias, segunditos, Elim
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
+import { Global } from "../../helpers/Global";
 
 const Tablas = ({
   gastos_Carolina,
   gastos_Matias,
   total_Matias,
   total_Carolina,
+  setGastos_Matias,
+  setGastos_Carolina,
 }) => {
+  const borrarGasto = async (id) => {
+    try {
+      const request = await fetch(Global.url_backend + "/borrar/" + id, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await request.json();
+
+      if (data.status === "success") {
+        alert(data.message);
+        setGastos_Matias((prevGastos) =>
+          prevGastos.filter((gasto) => gasto._id !== id)
+        );
+        setGastos_Carolina((prevGastos) =>
+          prevGastos.filter((gasto) => gasto._id !== id)
+        );
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <div className="tabla_general">
       <table border={1}>
         <thead>
           <tr>
-            <th colSpan={5}>Carolina</th>
+            <th colSpan={6}>Carolina</th>
           </tr>
           <tr>
             <th>Nº</th>
             <th>Fecha</th>
             <th>Descripción</th>
             <th>Monto</th>
+            <th>Edit/Elim</th>
             <th>Observación</th>
           </tr>
         </thead>
@@ -32,6 +59,21 @@ const Tablas = ({
                   <td>{item.lugar}</td>
                   <td style={{ textAlign: "right" }}>
                     $ {item.monto.toFixed(2)}
+                  </td>
+                  <td>
+                    <button>Edit</button>
+                    <button
+                      onClick={() => {
+                        const confirmBorrar = window.confirm(
+                          "¿Desea eliminar este gasto?"
+                        );
+                        if (confirmBorrar) {
+                          borrarGasto(item._id);
+                        }
+                      }}
+                    >
+                      X
+                    </button>
                   </td>
                   <td>{item.observacion}</td>
                 </tr>
@@ -50,13 +92,14 @@ const Tablas = ({
       <table border={1}>
         <thead>
           <tr>
-            <th colSpan={5}>Matias</th>
+            <th colSpan={6}>Matias</th>
           </tr>
           <tr>
             <th>Nº</th>
             <th>Fecha</th>
             <th>Descripción</th>
             <th>Monto</th>
+            <th>Edit/Elim</th>
             <th>Observación</th>
           </tr>
         </thead>
@@ -70,6 +113,21 @@ const Tablas = ({
                   <td>{item.lugar}</td>
                   <td style={{ textAlign: "right" }}>
                     $ {item.monto.toFixed(2)}
+                  </td>
+                  <td>
+                    <button>Edit</button>
+                    <button
+                      onClick={() => {
+                        const confirmBorrar = window.confirm(
+                          "¿Desea eliminar este gasto?"
+                        );
+                        if (confirmBorrar) {
+                          borrarGasto(item._id);
+                        }
+                      }}
+                    >
+                      X
+                    </button>
                   </td>
                   <td>{item.observacion}</td>
                 </tr>
