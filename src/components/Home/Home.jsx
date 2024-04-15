@@ -55,6 +55,7 @@ const Home = () => {
       if (data.status === "success") {
         const gastosCarolina = [];
         const gastosMatias = [];
+
         data.gastos.forEach((gasto) => {
           if (gasto.pagadoPor === "Carolina") {
             gastosCarolina.push(gasto);

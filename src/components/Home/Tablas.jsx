@@ -1,4 +1,4 @@
-// cSpell:ignore Matias, observacion, matias, segunditos
+// cSpell:ignore Matias, observacion, matias, segunditos, formkit
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 
 const Tablas = ({
@@ -17,7 +17,7 @@ const Tablas = ({
           <tr>
             <th>Nº</th>
             <th>Fecha</th>
-            <th>Lugar</th>
+            <th>Descripción</th>
             <th>Monto</th>
             <th>Observación</th>
           </tr>
@@ -55,7 +55,7 @@ const Tablas = ({
           <tr>
             <th>Nº</th>
             <th>Fecha</th>
-            <th>Lugar</th>
+            <th>Descripción</th>
             <th>Monto</th>
             <th>Observación</th>
           </tr>
