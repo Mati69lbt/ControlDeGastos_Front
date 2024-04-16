@@ -1,4 +1,4 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, formkit
+// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, 
 
 import useForm from "../../helpers/useForm";
 import { Link, useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const Crear = () => {
       );
 
       if (confirmación) {
-        const response = await fetch(Global.url_backend + "/" + "crear", {
+        const response = await fetch(Global.url_backend + "/crear", {
           method: "POST",
           body: JSON.stringify(nuevo_gasto),
           headers: {

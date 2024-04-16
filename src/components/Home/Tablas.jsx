@@ -1,4 +1,5 @@
 // cSpell:ignore Matias, observacion, matias, segunditos, Elim
+import { Link } from "react-router-dom";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import { Global } from "../../helpers/Global";
 
@@ -61,7 +62,9 @@ const Tablas = ({
                     $ {item.monto.toFixed(2)}
                   </td>
                   <td>
-                    <button>Edit</button>
+                    <Link to={"/editar/" + item._id}>
+                      <button>Edit</button>
+                    </Link>
                     <button
                       onClick={() => {
                         const confirmBorrar = window.confirm(
@@ -115,7 +118,9 @@ const Tablas = ({
                     $ {item.monto.toFixed(2)}
                   </td>
                   <td>
-                    <button>Edit</button>
+                    <Link to={"/editar/" + item._id}>
+                      <button>Edit</button>
+                    </Link>
                     <button
                       onClick={() => {
                         const confirmBorrar = window.confirm(

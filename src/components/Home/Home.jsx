@@ -45,7 +45,7 @@ const Home = () => {
   const getGastos = async () => {
     try {
       setLoading(true);
-      const response = await fetch(Global.url_backend + "/" + "listado", {
+      const response = await fetch(Global.url_backend + "/listado", {
         headers: {
           "Content-Type": "application/json",
         },
