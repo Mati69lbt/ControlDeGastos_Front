@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import { Global } from "../../helpers/Global";
+import "../../styles/tablas.css"
 
 const Tablas = ({
   gastos_Carolina,
