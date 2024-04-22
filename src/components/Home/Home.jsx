@@ -12,33 +12,65 @@ const Home = () => {
   const [total_Carolina, setTotal_Carolina] = useState(0);
   const [total_Matias, setTotal_Matias] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [mes, setMes] = useState("");
+
+  console.log(mes);
+
+  const mesActual = () => {
+    let mesItem =
+      gastos_Carolina.length > 0
+        ? gastos_Carolina[0]
+        : gastos_Matias.length > 0
+        ? gastos_Matias[0]
+        : null;
+if(mesItem) {
+    const fechaCompleta = mesItem.fecha;
+    const fecha = new Date(fechaCompleta);
+    const nombreMes = fecha.toLocaleString("es", { month: "long" });
+    const mesCapitalizado =
+      nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+    const year = fecha.getFullYear();
+    const fechaFormateada = mesCapitalizado + " - " + year;
+    setMes(fechaFormateada);
+    } else {
+      setMes("Aun no hay mes")
+  };
+}
 
   // Captura de Pantalla
-  const [screenshot, setScreenshot] = useState(null);
-  console.log(screenshot);
+  const captureScreen = async () => {
+    // Captura el cuerpo del documento utilizando `html2canvas`
+    const canvas = await html2canvas(document.body);
 
-  const captureScreen = () => {
-    // Suponemos que quieres capturar el body del documento, puedes ajustar el selector según necesites
-    html2canvas(document.body).then((canvas) => {
-      // Convierte el canvas a una imagen en formato Data URL
-      const imgData = canvas.toDataURL("image/jpg");
-      setScreenshot(imgData);
-    });
+    // Convierte el canvas a una imagen en formato Data URL
+    const imgData = canvas.toDataURL("image/jpg");
+
+    return imgData;
   };
 
   const cerrarMes = async () => {
     try {
       const confirmación = window.confirm("¿Está seguro de finalizar el mes?");
       if (confirmación) {
-        captureScreen();
+        const screenshot = await captureScreen();
+
+        if (!screenshot) {
+          alert("La captura de pantalla no está lista.");
+          return;
+        }
+
+        // Convertir Data URL a Blob
+        const fetchResponse = await fetch(screenshot);
+        const blob = await fetchResponse.blob();
+
         const formData = new FormData();
-        formData.append("captura", screenshot);
-        formData.append("mes", "Abril");
+        formData.append("captura", blob, "screenshot.jpg");
+        formData.append("mes", mes);
+
         const response = await fetch(Global.url_backend + "/subirImagen", {
           method: "POST",
           body: formData,
         });
-        console.log(response);
       } else {
         return false;
       }
@@ -74,6 +106,7 @@ const Home = () => {
 
   useEffect(() => {
     calcularTotalMatias();
+    mesActual();
   }, [gastos_Carolina, gastos_Matias]);
 
   const getGastos = async () => {
@@ -133,6 +166,7 @@ const Home = () => {
             <tr>
               <th>Total Gastos Entre Los Dos</th>
               <td>$ {subTotal.toFixed(2)} </td>
+              <th colSpan={1} rowSpan={4}> {mes}</th>
             </tr>
             <tr>
               <th>Costo Para Cada Uno</th>
@@ -157,7 +191,7 @@ const Home = () => {
       <button onClick={cerrarMes}>Cerrar Mes</button>
       <button>Ver Gastos de Meses Anteriores</button>
       <hr />
-      {screenshot && <img src={screenshot} alt="Captura de pantalla" />}
+      {/* {screenshot && <img src={screenshot} alt="Captura de pantalla" />} */}
     </div>
   );
 };
