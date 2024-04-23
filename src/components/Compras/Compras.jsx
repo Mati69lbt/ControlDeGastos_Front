@@ -9,6 +9,7 @@ import guardar_Producto from "./helper_compras/guardar_Producto";
 import editar_Producto from "./helper_compras/editar_Producto";
 import buscar_producto from "./helper_compras/buscar_producto";
 import useForm_edit from "./helper_compras/useForm_edit";
+import borrar_ListaDeCompras from "./helper_compras/borrar_ListaDeCompras";
 
 const Compras = () => {
   const { form, changed, reset } = useForm({});
@@ -24,7 +25,9 @@ const Compras = () => {
 
   const handleGuardarProducto = async (e) => {
     e.preventDefault();
+
     await guardar_Producto(form, setProductos);
+
     reset();
   };
 
@@ -41,7 +44,12 @@ const Compras = () => {
       productoBuscado._id,
       setProductoBuscado
     );
+
     reset_edit();
+  };
+
+  const eliminar_ListaDeCompras = async () => {
+    borrar_ListaDeCompras(setProductos);
   };
 
   return (
@@ -87,7 +95,12 @@ const Compras = () => {
           </tr>
         </thead>
         <tbody>
-          {productos.length >= 1 &&
+          {productos.length < 1 ? (
+            <tr>
+              <th colSpan={4}>No hay productos aun en la lista de compras</th>
+            </tr>
+          ) : (
+            productos.length >= 1 &&
             productos.map((prod, index) => {
               return (
                 <tr key={prod._id}>
@@ -101,7 +114,7 @@ const Compras = () => {
                     <button
                       onClick={() => {
                         const confirmBorrar = window.confirm(
-                          "¿Desea eliminar este producto?"
+                          "¿Desea eliminar toda la lista de compras?"
                         );
                         if (confirmBorrar) {
                           borrar_Producto(prod._id, setProductos);
@@ -114,7 +127,8 @@ const Compras = () => {
                   <td>{prod.observacion}</td>
                 </tr>
               );
-            })}
+            })
+          )}
         </tbody>
       </table>
       <hr />
@@ -146,6 +160,19 @@ const Compras = () => {
         </div>
         <input type="submit" value="Actualizar" />
       </form>
+      <hr />
+      <button
+        onClick={() => {
+          const confirmBorrar = window.confirm(
+            "¿Desea eliminar este producto?"
+          );
+          if (confirmBorrar) {
+            eliminar_ListaDeCompras();
+          }
+        }}
+      >
+        Eliminar Tabla
+      </button>
       <hr />
     </div>
   );
