@@ -7,9 +7,15 @@ const useForm = (initialObj = {}) => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
   };
+
+  const reset = () => {
+    setForm(initialObj);
+  };
+
   return {
     form,
     changed,
+    reset,
   };
 };
 

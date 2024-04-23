@@ -7,8 +7,10 @@ const Landing_Page = () => {
     <div>
       <h1>Usted, ¿Quien es?</h1>
       <Link to="/home">
-        <button>Carolina</button>
-        <button>Matias</button>
+        <button>Control de Gastos</button>
+      </Link>
+      <Link to="/compras">
+        <button>Lista de Compras</button>
       </Link>
     </div>
   );

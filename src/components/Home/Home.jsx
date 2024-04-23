@@ -6,6 +6,7 @@ import Tablas from "./Tablas";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
 import Resetear_Tabla from "../../helpers/Resetear_Tabla";
+import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -198,6 +199,9 @@ const Home = () => {
       <button onClick={cerrarMes}>Cerrar Mes</button>
       <Link to="/registros">
         <button>Ver Gastos de Meses Anteriores</button>
+      </Link>
+      <Link to="/compras">
+        <button>Lista de Compras</button>
       </Link>
       <hr />
     </div>
