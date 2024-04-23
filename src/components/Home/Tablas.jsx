@@ -59,7 +59,12 @@ const Tablas = ({
                   <td style={{ textAlign: "center" }}>{index + 1}</td>
                   <td>{Fecha_Formateada(item.fecha)}</td>
                   <td>{item.lugar}</td>
-                  <td style={{ textAlign: "right" }}>
+                  <td
+                    style={{
+                      textAlign: "right",
+                      color: item.monto < 0 ? "red" : "black",
+                    }}
+                  >
                     $ {item.monto.toFixed(2)}
                   </td>
                   <td>
@@ -115,7 +120,13 @@ const Tablas = ({
                   <td style={{ textAlign: "center" }}>{index + 1}</td>
                   <td>{Fecha_Formateada(item.fecha)}</td>
                   <td>{item.lugar}</td>
-                  <td style={{ textAlign: "right" }}>
+
+                  <td
+                    style={{
+                      textAlign: "right",
+                      color: item.monto < 0 ? "red" : "black",
+                    }}
+                  >
                     $ {item.monto.toFixed(2)}
                   </td>
                   <td>

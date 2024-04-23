@@ -1,10 +1,11 @@
-// cSpell:ignore Matias, observacion, matias, segunditos
+// cSpell:ignore Matias, observacion, matias, segunditos, Resetear
 
 import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
 import Tablas from "./Tablas";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
+import Resetear_Tabla from "../../helpers/Resetear_Tabla";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -14,8 +15,6 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [mes, setMes] = useState("");
 
-  console.log(mes);
-
   const mesActual = () => {
     let mesItem =
       gastos_Carolina.length > 0
@@ -23,19 +22,19 @@ const Home = () => {
         : gastos_Matias.length > 0
         ? gastos_Matias[0]
         : null;
-if(mesItem) {
-    const fechaCompleta = mesItem.fecha;
-    const fecha = new Date(fechaCompleta);
-    const nombreMes = fecha.toLocaleString("es", { month: "long" });
-    const mesCapitalizado =
-      nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
-    const year = fecha.getFullYear();
-    const fechaFormateada = mesCapitalizado + " - " + year;
-    setMes(fechaFormateada);
+    if (mesItem) {
+      const fechaCompleta = mesItem.fecha;
+      const fecha = new Date(fechaCompleta);
+      const nombreMes = fecha.toLocaleString("es", { month: "long" });
+      const mesCapitalizado =
+        nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+      const year = fecha.getFullYear();
+      const fechaFormateada = mesCapitalizado + " - " + year;
+      setMes(fechaFormateada);
     } else {
-      setMes("Aun no hay mes")
+      setMes("Aun no hay mes");
+    }
   };
-}
 
   // Captura de Pantalla
   const captureScreen = async () => {
@@ -71,6 +70,11 @@ if(mesItem) {
           method: "POST",
           body: formData,
         });
+
+        const data = await response.json();
+        if (data.status === "success") {
+          Resetear_Tabla(setGastos_Matias, setGastos_Carolina);
+        }
       } else {
         return false;
       }
@@ -166,7 +170,10 @@ if(mesItem) {
             <tr>
               <th>Total Gastos Entre Los Dos</th>
               <td>$ {subTotal.toFixed(2)} </td>
-              <th colSpan={1} rowSpan={4}> {mes}</th>
+              <th colSpan={1} rowSpan={4}>
+                {" "}
+                {mes}
+              </th>
             </tr>
             <tr>
               <th>Costo Para Cada Uno</th>
@@ -189,9 +196,10 @@ if(mesItem) {
       </div>
       <hr />
       <button onClick={cerrarMes}>Cerrar Mes</button>
-      <button>Ver Gastos de Meses Anteriores</button>
+      <Link to="/registros">
+        <button>Ver Gastos de Meses Anteriores</button>
+      </Link>
       <hr />
-      {/* {screenshot && <img src={screenshot} alt="Captura de pantalla" />} */}
     </div>
   );
 };
