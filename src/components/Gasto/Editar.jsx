@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import useForm from "../../helpers/useForm";
 import { Global } from "../../helpers/Global";
 import { useEffect, useState } from "react";
+import "./crear.css";
 
 const Editar = () => {
   const [gasto, setGasto] = useState([]);
@@ -65,12 +66,15 @@ const Editar = () => {
   };
 
   return (
-    <div>
+    <div className="container_crear">
       <h1>Editar Gasto</h1>
-      <form action="" onSubmit={gasto_editar}>
+      <form action="" onSubmit={gasto_editar} className="form_crear">
         <div>
-          <label htmlFor="fecha">Fecha</label>
+          <label htmlFor="fecha" className="label_crear">
+            Fecha
+          </label>
           <input
+            className="form_crear"
             type="date"
             name="fecha"
             id="fecha"
@@ -80,8 +84,11 @@ const Editar = () => {
           />
         </div>
         <div>
-          <label htmlFor="lugar">Descripción</label>
+          <label className="label_crear" htmlFor="lugar">
+            Descripción
+          </label>
           <input
+            className="form_crear"
             type="text"
             name="lugar"
             id="lugar"
@@ -91,8 +98,11 @@ const Editar = () => {
           />
         </div>
         <div>
-          <label htmlFor="monto">Monto</label>
+          <label className="label_crear" htmlFor="monto">
+            Monto
+          </label>
           <input
+            className="form_crear"
             type="number"
             name="monto"
             id="monto"
@@ -101,8 +111,11 @@ const Editar = () => {
           />
         </div>
         <div>
-          <label htmlFor="pagadoPor">Pagado por:</label>
+          <label className="label_crear" htmlFor="pagadoPor">
+            Pagado por:
+          </label>
           <select
+            className="form_crear"
             name="pagadoPor"
             id="pagadoPor"
             required
@@ -115,8 +128,11 @@ const Editar = () => {
           </select>
         </div>
         <div>
-          <label htmlFor="observacion">Observación:</label>
+          <label className="label_crear" htmlFor="observacion">
+            Observación:
+          </label>
           <input
+            className="form_crear"
             type="text"
             name="observacion"
             id="observacion"

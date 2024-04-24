@@ -1,0 +1,13 @@
+@media (max-width: 500px) {
+  .registros {
+    width: 100% !important;
+  }
+  .registros img {
+    width: 100%;
+    max-width: 900px; /* Máximo ancho original */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  .registros td {
+    font-size: 12px;
+  }
+}

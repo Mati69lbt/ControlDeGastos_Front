@@ -1,17 +1,20 @@
 // cSpell:ignore Matias
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Landing_page.css";
 
 const Landing_Page = () => {
   return (
-    <div>
-      <h1>Usted, ¿Quien es?</h1>
-      <Link to="/home">
-        <button>Control de Gastos</button>
-      </Link>
-      <Link to="/compras">
-        <button>Lista de Compras</button>
-      </Link>
+    <div className="container">
+      <h1 className="titulo">Hola, ¿Cómo estas hoy?</h1>
+      <div className="inicio">
+        <Link to="/home">
+          <button className="btn_inicio">Control de Gastos</button>
+        </Link>
+        <Link to="/compras">
+          <button className="btn_inicio">Lista de Compras</button>
+        </Link>
+      </div>
     </div>
   );
 };

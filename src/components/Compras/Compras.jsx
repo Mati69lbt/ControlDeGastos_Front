@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import getProductos from "./helper_compras/getProductos";
 import useForm from "../../helpers/useForm";
+import "./compras.css";
 
 import borrar_Producto from "./helper_compras/borrar_Producto";
 import guardar_Producto from "./helper_compras/guardar_Producto";
@@ -56,11 +57,11 @@ const Compras = () => {
     <div>
       <h1>Lista de Compras</h1>
       <Link to="/home">
-        <button>Control de Gastos</button>
+        <button className="btn_gasto">Control de Gastos</button>
       </Link>
       <hr />
       <h3>Agregar Producto a la Lista de Compras</h3>
-      <form action="" onSubmit={handleGuardarProducto}>
+      <form action="" onSubmit={handleGuardarProducto} className="form_crear">
         <div>
           <label htmlFor="producto">Producto</label>
           <input
@@ -82,10 +83,10 @@ const Compras = () => {
             onChange={changed}
           />
         </div>
-        <input type="submit" value="Agregar" />
+        <input type="submit" value="Agregar" className="btn_gasto" />
       </form>
       <hr />
-      <table border={"2"} width="75%">
+      <table border={"2"} className="tabla-compras">
         <thead>
           <tr>
             <th></th>
@@ -104,25 +105,27 @@ const Compras = () => {
             productos.map((prod, index) => {
               return (
                 <tr key={prod._id}>
-                  <td>{index + 1}</td>
+                  <td style={{ textAlign: "center" }}>{index + 1}</td>
                   <td>{prod.producto}</td>
                   <td>
-                    <button onClick={() => handleBuscarProducto(prod._id)}>
-                      Editar
-                    </button>
+                    <div className="btn_celda_edit_elim">
+                      <button onClick={() => handleBuscarProducto(prod._id)}>
+                        E
+                      </button>
 
-                    <button
-                      onClick={() => {
-                        const confirmBorrar = window.confirm(
-                          "¿Desea eliminar toda la lista de compras?"
-                        );
-                        if (confirmBorrar) {
-                          borrar_Producto(prod._id, setProductos);
-                        }
-                      }}
-                    >
-                      X
-                    </button>
+                      <button
+                        onClick={() => {
+                          const confirmBorrar = window.confirm(
+                            "¿Desea eliminar toda la lista de compras?"
+                          );
+                          if (confirmBorrar) {
+                            borrar_Producto(prod._id, setProductos);
+                          }
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
                   </td>
                   <td>{prod.observacion}</td>
                 </tr>
@@ -133,7 +136,11 @@ const Compras = () => {
       </table>
       <hr />
       <h3>Editar Producto </h3>
-      <form key={productoBuscado._id || "new"} onSubmit={handleEditarProducto}>
+      <form
+        key={productoBuscado._id || "new"}
+        onSubmit={handleEditarProducto}
+        className="form_crear"
+      >
         <div>
           <label htmlFor="producto">Producto</label>
           <input
@@ -158,7 +165,7 @@ const Compras = () => {
             defaultValue={productoBuscado.observacion || ""}
           />
         </div>
-        <input type="submit" value="Actualizar" />
+        <input type="submit" value="Actualizar" className="btn_gasto" />
       </form>
       <hr />
       <button

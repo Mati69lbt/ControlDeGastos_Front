@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
 import { Link } from "react-router-dom";
+import "./registros.css";
 
 const Registros = () => {
   const [loading, setLoading] = useState(false);
@@ -30,12 +31,12 @@ const Registros = () => {
     }
   };
   return (
-    <div>
+    <div >
       <Link to="/home">
         <button>Volver</button>
       </Link>
       <hr />
-      <table border={1}>
+      <table border={1} className="registros">
         <thead>
           <tr>
             <th>Mes</th>

@@ -1,0 +1,48 @@
+.titulo {
+  font-family: "Arial", sans-serif;
+  font-size: 50px;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin: 80px;
+}
+
+.inicio {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.btn_inicio {
+  background-color: #4caf50; /* Verde */
+  border-radius: 20px;
+  border-color: transparent;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+/* Pantalla de celular */
+@media screen and (max-width: 500px) {
+  .titulo {
+    margin: 25px;
+    margin-top: 50px;
+    font-size: 40px;
+  }
+  .inicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .btn_inicio {
+    margin: 20px;
+  }
+}

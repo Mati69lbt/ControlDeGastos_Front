@@ -1,9 +1,10 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, 
+// cSpell:ignore Matias, observacion, matias, segunditos, descripcion,
 
 import useForm from "../../helpers/useForm";
 import { Link, useNavigate } from "react-router-dom";
 import { Global } from "../../helpers/Global";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
+import "./crear.css";
 
 const Crear = () => {
   const { form, changed } = useForm({});
@@ -40,13 +41,16 @@ const Crear = () => {
   };
 
   return (
-    <div>
+    <div className="container_crear">
       <h1>Nuevo Gasto</h1>
-      <form action="" onSubmit={guardar_Gasto}>
+      <form action="" onSubmit={guardar_Gasto} className="form_crear">
         <div>
-          <label htmlFor="fecha">Fecha</label>
+          <label htmlFor="fecha" className="label_crear">
+            Fecha
+          </label>
 
           <input
+            className="form_crear"
             type="date"
             name="fecha"
             id="fecha"
@@ -55,8 +59,11 @@ const Crear = () => {
           />
         </div>
         <div>
-          <label htmlFor="lugar">Descripción</label>
+          <label className="label_crear" htmlFor="lugar">
+            Descripción
+          </label>
           <input
+            className="form_crear"
             type="text"
             name="lugar"
             id="lugar"
@@ -65,29 +72,50 @@ const Crear = () => {
           />
         </div>
         <div>
-          <label htmlFor="monto">Monto</label>
-          <input type="number" name="monto" id="monto" onChange={changed} />
+          <label htmlFor="monto" className="label_crear">
+            Monto
+          </label>
+          <input
+            type="number"
+            name="monto"
+            id="monto"
+            onChange={changed}
+            className="form_crear"
+          />
         </div>
         <div>
-          <label htmlFor="pagadoPor">Pagado por:</label>
-          <select name="pagadoPor" id="pagadoPor" required onChange={changed}>
+          <label htmlFor="pagadoPor" className="label_crear">
+            Pagado por:
+          </label>
+          <select
+            name="pagadoPor"
+            className="form_crear"
+            id="pagadoPor"
+            required
+            onChange={changed}
+          >
             <option value="">Seleccionar</option>
             <option value="Carolina">Carolina</option>
             <option value="Matias">Matias</option>
           </select>
         </div>
         <div>
-          <label htmlFor="observacion">Observación:</label>
+          <label htmlFor="observacion" className="label_crear">
+            Observación:
+          </label>
           <input
             type="text"
             name="observacion"
             id="observacion"
             onChange={changed}
+            className="form_crear"
           />
         </div>
-        <button type="submit">Guardar</button>
+        <button className="form_crear" type="submit">
+          Guardar
+        </button>
       </form>
-      <Link to="/home">
+      <Link to="/home" className="link_crear">
         <button>Volver</button>
       </Link>
     </div>

@@ -6,7 +6,7 @@ import Tablas from "./Tablas";
 import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
 import Resetear_Tabla from "../../helpers/Resetear_Tabla";
-import Fecha_Formateada from "../../helpers/Fecha_Formateada";
+import "./home.css";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -143,10 +143,14 @@ const Home = () => {
       console.log("error", error);
     }
   };
+
   return (
     <div>
       <Link to="/crear">
-        <button>Nuevo Gasto</button>
+        <button className="btn_gasto">Nuevo Gasto</button>
+      </Link>
+      <Link to="/compras">
+        <button className="btn_gasto">Lista de Compras</button>
       </Link>
 
       <hr />
@@ -166,43 +170,66 @@ const Home = () => {
 
       <hr />
       <div>
-        <table border={1}>
+        <table border={1} className="tabla_totales">
           <tbody>
             <tr>
-              <th>Total Gastos Entre Los Dos</th>
-              <td>$ {subTotal.toFixed(2)} </td>
-              <th colSpan={1} rowSpan={4}>
-                {" "}
+              <th className="celda_total">Total Gastos Entre Los Dos</th>
+              <td>
+                ${" "}
+                {subTotal.toLocaleString("es-ES", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}{" "}
+              </td>
+              <th colSpan={1} rowSpan={4} className="mes">
                 {mes}
               </th>
             </tr>
             <tr>
-              <th>Costo Para Cada Uno</th>
-              <td>$ {costo_cada_uno.toFixed(2)}</td>
-            </tr>
-            <tr>
-              <th>Diferencia Matias</th>
-              <td style={{ color: diferencia_matias < 0 ? "red" : "black" }}>
-                $ {diferencia_matias.toFixed(2)}
+              <th className="celda_total">Costo Para Cada Uno</th>
+              <td>
+                ${" "}
+                {costo_cada_uno.toLocaleString("es-ES", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </td>
             </tr>
             <tr>
-              <th>Diferencia Carolina</th>
+              <th className="celda_total">Diferencia Matias</th>
+              <td style={{ color: diferencia_matias < 0 ? "red" : "black" }}>
+                ${" "}
+                {diferencia_matias.toLocaleString("es-ES", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </td>
+            </tr>
+            <tr>
+              <th className="celda_total">Diferencia Carolina</th>
               <td style={{ color: diferencia_carolina < 0 ? "red" : "black" }}>
-                $ {diferencia_carolina.toFixed(2)}
+                ${" "}
+                {diferencia_carolina.toLocaleString("es-ES", {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
       <hr />
-      <button onClick={cerrarMes}>Cerrar Mes</button>
-      <Link to="/registros">
-        <button>Ver Gastos de Meses Anteriores</button>
-      </Link>
-      <Link to="/compras">
-        <button>Lista de Compras</button>
-      </Link>
+      <div className="btn_footer">
+        <button className="btn_gasto" onClick={cerrarMes}>
+          Cerrar Mes
+        </button>
+        <Link to="/registros">
+          <button className="btn_gasto">Ver Gastos de Meses Anteriores</button>
+        </Link>
+        <Link to="/compras">
+          <button className="btn_gasto">Lista de Compras</button>
+        </Link>
+      </div>
       <hr />
     </div>
   );

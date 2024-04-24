@@ -1,8 +1,7 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, Elim
+// cSpell:ignore Matias, observacion, matias, segunditos, Elim, elim
 import { Link } from "react-router-dom";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import { Global } from "../../helpers/Global";
-import "../../styles/tablas.css";
 
 const Tablas = ({
   gastos_Carolina,
@@ -37,7 +36,7 @@ const Tablas = ({
   };
   return (
     <div className="tabla_general">
-      <table border={1}>
+      <table border={1} className="tablaCyM">
         <thead>
           <tr>
             <th colSpan={6}>Carolina</th>
@@ -56,49 +55,66 @@ const Tablas = ({
             gastos_Carolina.map((item, index) => {
               return (
                 <tr key={item._id}>
-                  <td style={{ textAlign: "center" }}>{index + 1}</td>
-                  <td>{Fecha_Formateada(item.fecha)}</td>
-                  <td>{item.lugar}</td>
+                  <td className="index_tabla">{index + 1}</td>
+                  <td className="celda_formato">
+                    {Fecha_Formateada(item.fecha)}
+                  </td>
+                  <td className="celda_formato">{item.lugar}</td>
                   <td
+                    className="monto_tabla"
                     style={{
                       textAlign: "right",
                       color: item.monto < 0 ? "red" : "black",
                     }}
                   >
-                    $ {item.monto.toFixed(2)}
+                    ${" "}
+                    {item.monto.toLocaleString("es-ES", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td>
-                    <Link to={"/editar/" + item._id}>
-                      <button>Edit</button>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        const confirmBorrar = window.confirm(
-                          "¿Desea eliminar este gasto?"
-                        );
-                        if (confirmBorrar) {
-                          borrarGasto(item._id);
-                        }
-                      }}
-                    >
-                      X
-                    </button>
+                    <div className="btn_celda_edit_elim">
+                      <Link to={"/editar/" + item._id}>
+                        <button>E</button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          const confirmBorrar = window.confirm(
+                            "¿Desea eliminar este gasto?"
+                          );
+                          if (confirmBorrar) {
+                            borrarGasto(item._id);
+                          }
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
                   </td>
-                  <td>{item.observacion}</td>
+                  <td className="celda_formato">{item.observacion}</td>
                 </tr>
               );
             })}
           <tr>
-            <th colSpan={3} style={{ textAlign: "right" }}>
+            <th
+              className="celda_total"
+              colSpan={3}
+              style={{ textAlign: "right" }}
+            >
               TOTAL:
             </th>
             <td colSpan={3} style={{ textAlign: "center" }}>
-              $ {total_Carolina.toFixed(2)}
+              $
+              {total_Carolina.toLocaleString("es-ES", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </td>
           </tr>
         </tbody>
       </table>
-      <table border={1}>
+      <table border={1} className="tablaCyM">
         <thead>
           <tr>
             <th colSpan={6}>Matias</th>
@@ -118,8 +134,10 @@ const Tablas = ({
               return (
                 <tr key={item._id}>
                   <td style={{ textAlign: "center" }}>{index + 1}</td>
-                  <td>{Fecha_Formateada(item.fecha)}</td>
-                  <td>{item.lugar}</td>
+                  <td className="celda_formato">
+                    {Fecha_Formateada(item.fecha)}
+                  </td>
+                  <td className="celda_formato">{item.lugar}</td>
 
                   <td
                     style={{
@@ -127,35 +145,49 @@ const Tablas = ({
                       color: item.monto < 0 ? "red" : "black",
                     }}
                   >
-                    $ {item.monto.toFixed(2)}
+                    ${" "}
+                    {item.monto.toLocaleString("es-ES", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </td>
                   <td>
-                    <Link to={"/editar/" + item._id}>
-                      <button>Edit</button>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        const confirmBorrar = window.confirm(
-                          "¿Desea eliminar este gasto?"
-                        );
-                        if (confirmBorrar) {
-                          borrarGasto(item._id);
-                        }
-                      }}
-                    >
-                      X
-                    </button>
+                    <div className="btn_celda_edit_elim">
+                      <Link to={"/editar/" + item._id}>
+                        <button>E</button>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          const confirmBorrar = window.confirm(
+                            "¿Desea eliminar este gasto?"
+                          );
+                          if (confirmBorrar) {
+                            borrarGasto(item._id);
+                          }
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
                   </td>
-                  <td>{item.observacion}</td>
+                  <td className="celda_formato">{item.observacion}</td>
                 </tr>
               );
             })}
           <tr>
-            <th colSpan={3} style={{ textAlign: "right" }}>
+            <th
+              className="celda_total"
+              colSpan={3}
+              style={{ textAlign: "right" }}
+            >
               TOTAL:
             </th>
             <td colSpan={3} style={{ textAlign: "center" }}>
-              $ {total_Matias.toFixed(2)}
+              ${" "}
+              {total_Matias.toLocaleString("es-ES", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </td>
           </tr>
         </tbody>

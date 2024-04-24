@@ -1,0 +1,78 @@
+.btn_gasto {
+  background-color: #4caf50; /* Verde */
+  border-radius: 20px;
+  border-color: transparent;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+hr {
+  border: solid 2px black;
+}
+
+.tabla_general {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 10px;
+}
+.tablaCyM {
+  width: 100%;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.index_tabla {
+  text-align: center;
+}
+.tabla_totales {
+  width: 50%;
+  text-align: right;
+}
+.tablaCyM .celda_formato {
+  padding-left: 5px;
+}
+
+.celda_total {
+  padding-right: 15px;
+}
+.btn_celda_edit_elim {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+.mes {
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .tabla_general {
+    flex-direction: column;
+    align-items: center;
+    font-size: 12px;
+  }
+  .tabla_totales {
+    font-size: 14px;
+    width: 100%;
+  }
+  .btn_gasto {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .btn_celda_edit_elim button {
+    font-size: 10px;
+  }
+  .btn_footer {
+    display: flex;
+    flex-direction: column;
+  }
+  .btn_footer > button:first-child {
+    width: 40%;
+  }
+}
