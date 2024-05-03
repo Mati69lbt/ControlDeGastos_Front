@@ -80,6 +80,7 @@ const Crear = () => {
             name="monto"
             id="monto"
             onChange={changed}
+            step="0.01"
             className="form_crear"
           />
         </div>
