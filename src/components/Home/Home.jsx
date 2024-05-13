@@ -15,6 +15,17 @@ const Home = () => {
   const [total_Matias, setTotal_Matias] = useState(0);
   const [loading, setLoading] = useState(false);
   const [mes, setMes] = useState("");
+  const [conteo, setConteo] = useState(60);
+
+  useEffect(() => {
+    if (loading && conteo > 0) {
+      const timer = setInterval(() => {
+        setConteo((prevConteo) => prevConteo - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [loading, conteo]);
 
   const mesActual = () => {
     let mesItem =
@@ -138,7 +149,9 @@ const Home = () => {
         setGastos_Carolina(gastosCarolina);
         setGastos_Matias(gastosMatias);
       }
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 5000);
     } catch (error) {
       console.log("error", error);
     }
@@ -155,7 +168,15 @@ const Home = () => {
 
       <hr />
       {loading ? (
-        <p>Cargando Datos... Espero unos segunditos...</p>
+        <div>
+          <p className="loading-message">
+            Cargando Datos... Espero unos segunditos...
+          </p>
+          <div className="countdown-container">
+            <p className="countdown-label">Tiempo restante:</p>
+            <p className="countdown">{conteo}</p>
+          </div>
+        </div>
       ) : (
         <Tablas
           gastos_Carolina={gastos_Carolina}

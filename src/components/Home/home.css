@@ -50,6 +50,24 @@ hr {
 .mes {
   text-align: center;
 }
+.loading-message {
+  font-size: 18px;
+}
+
+.countdown-container {
+  display: flex;
+  align-items: center;
+}
+
+.countdown-label {
+  font-size: 16px;
+}
+
+.countdown {
+  font-size: 24px;
+  margin-left: 15px;
+  font-weight: bold;
+}
 
 @media (max-width: 500px) {
   .tabla_general {
