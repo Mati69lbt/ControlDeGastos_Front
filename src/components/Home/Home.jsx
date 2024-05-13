@@ -149,9 +149,7 @@ const Home = () => {
         setGastos_Carolina(gastosCarolina);
         setGastos_Matias(gastosMatias);
       }
-      setTimeout(() => {
-        setLoading(false);
-      }, 5000);
+      setLoading(false);
     } catch (error) {
       console.log("error", error);
     }
