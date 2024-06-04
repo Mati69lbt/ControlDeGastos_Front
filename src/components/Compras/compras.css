@@ -22,4 +22,8 @@
     font-size: 12px;
     width: 100%;
   }
+  .btn_celda_edit_elim button {
+    font-size: 16px;
+    margin-top: 8px;
+  }
 }

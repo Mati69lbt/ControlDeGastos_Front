@@ -116,7 +116,7 @@ const Compras = () => {
                       <button
                         onClick={() => {
                           const confirmBorrar = window.confirm(
-                            "¿Desea eliminar toda la lista de compras?"
+                            `¿Desea eliminar este producto:  ${prod.producto}?`
                           );
                           if (confirmBorrar) {
                             borrar_Producto(prod._id, setProductos);
