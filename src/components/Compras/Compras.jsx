@@ -171,7 +171,7 @@ const Compras = () => {
       <button
         onClick={() => {
           const confirmBorrar = window.confirm(
-            "¿Desea eliminar este producto?"
+            "¿Desea eliminar toda la lista?"
           );
           if (confirmBorrar) {
             eliminar_ListaDeCompras();
