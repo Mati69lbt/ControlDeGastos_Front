@@ -105,8 +105,8 @@ const Compras = () => {
             productos.map((prod, index) => {
               return (
                 <tr key={prod._id}>
-                  <td style={{ textAlign: "center" }}>{index + 1}</td>
-                  <td>{prod.producto}</td>
+                  <td className="index_produc">{index + 1}</td>
+                  <td className="prod_tabla">{prod.producto}</td>
                   <td>
                     <div className="btn_celda_edit_elim">
                       <button onClick={() => handleBuscarProducto(prod._id)}>
