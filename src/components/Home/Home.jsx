@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import html2canvas from "html2canvas";
 import Resetear_Tabla from "../../helpers/Resetear_Tabla";
 import "./home.css";
+import frase from "../../helpers/Frases";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -15,7 +16,8 @@ const Home = () => {
   const [total_Matias, setTotal_Matias] = useState(0);
   const [loading, setLoading] = useState(false);
   const [mes, setMes] = useState("");
-  const [conteo, setConteo] = useState(60);
+  const [conteo, setConteo] = useState(120);
+  const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
     if (loading && conteo > 0) {
@@ -26,6 +28,12 @@ const Home = () => {
       return () => clearInterval(timer);
     }
   }, [loading, conteo]);
+
+  useEffect(() => {
+    if (conteo % 10 === 0) {
+      setMensaje(frase());
+    }
+  }, [conteo]);
 
   const mesActual = () => {
     let mesItem =
@@ -167,9 +175,13 @@ const Home = () => {
       <hr />
       {loading ? (
         <div>
+          {
+            conteo > 110 &&
           <p className="loading-message">
             Cargando Datos... Espero unos segunditos...
           </p>
+          }
+          <p className="loading-message">{mensaje}</p>
           <div className="countdown-container">
             <p className="countdown-label">Tiempo restante:</p>
             <p className="countdown">{conteo}</p>

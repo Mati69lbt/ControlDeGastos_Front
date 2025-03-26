@@ -20,3 +20,4 @@ const useForm = (initialObj = {}) => {
 };
 
 export default useForm;
+
