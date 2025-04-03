@@ -164,7 +164,7 @@ const Home = () => {
   };
 
   return (
-    <div style={{ padding: "1rem" }}>
+    <div>
       <Link to="/crear">
         <button className="btn_gasto">Nuevo Gasto</button>
       </Link>
@@ -175,11 +175,12 @@ const Home = () => {
       <hr />
       {loading ? (
         <div>
-          {conteo > 110 && (
-            <p className="loading-message">
-              Cargando Datos... Espero unos segunditos...
-            </p>
-          )}
+          {
+            conteo > 110 &&
+          <p className="loading-message">
+            Cargando Datos... Espero unos segunditos...
+          </p>
+          }
           <p className="loading-message">{mensaje}</p>
           <div className="countdown-container">
             <p className="countdown-label">Tiempo restante:</p>

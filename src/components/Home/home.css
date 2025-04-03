@@ -21,11 +21,52 @@ hr {
   flex-direction: row;
   justify-content: space-around;
   gap: 1rem;
+  flex-wrap: wrap;
 }
+
 .tablaCyM {
   width: 100%;
-  min-height: 80px;
-  margin-bottom: 10px;
+  min-width: 500px;
+  max-width: 600px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tablaCyM th,
+.tablaCyM td {
+  border: 1px solid black;
+  padding: 5px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.tablaCyM th:nth-child(1),
+.tablaCyM td:nth-child(1) {
+  width: 3%;
+  text-align: center;
+}
+
+.tablaCyM th:nth-child(2),
+.tablaCyM td:nth-child(2) {
+  width: 12%;
+  text-align: left;
+}
+
+.tablaCyM th:nth-child(4),
+.tablaCyM td:nth-child(4) {
+  width: 18%;
+  text-align: right;
+}
+
+.tablaCyM th:nth-child(5),
+.tablaCyM td:nth-child(5) {
+  width: 5%;
+  text-align: center;
+}
+
+.tablaCyM th:nth-child(6),
+.tablaCyM td:nth-child(6) {
+  width: 30%;
 }
 
 .index_tabla {
@@ -42,11 +83,18 @@ hr {
 .celda_total {
   padding-right: 15px;
 }
+
 .btn_celda_edit_elim {
   display: flex;
-  justify-content: space-around;
-  align-items: baseline;
+  justify-content: space-evenly;
+  gap: 5px;
 }
+
+.btn_celda_edit_elim button {
+  font-size: 12px;
+  padding: 2px 6px;
+}
+
 .mes {
   text-align: center;
 }
@@ -75,22 +123,63 @@ hr {
     align-items: center;
     font-size: 12px;
   }
-  .tabla_totales {
-    font-size: 14px;
+
+  .tablaCyM {
     width: 100%;
+    min-width: unset;
+    max-width: unset;
+    margin-bottom: 1rem;
   }
-  .btn_gasto {
-    padding: 8px 16px;
+
+  .tablaCyM th,
+  .tablaCyM td {
     font-size: 12px;
+    padding: 4px;
   }
-  .btn_celda_edit_elim button {
-    font-size: 10px;
+
+  .tablaCyM th:nth-child(2),
+  .tablaCyM td:nth-child(2) {
+    width: 30%;
+    text-align: left;
   }
+
+  .tablaCyM th:nth-child(4),
+  .tablaCyM td:nth-child(4) {
+    width: 34%;
+    text-align: right;
+  }
+
+  .tabla_totales {
+    font-size: 13px;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .btn_gasto {
+    padding: 10px;
+    font-size: 13px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
   .btn_footer {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
   }
-  .btn_footer > button:first-child {
-    width: 40%;
+
+  .btn_footer button {
+    width: 100%;
+  }
+
+  .countdown-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn_celda_edit_elim button {
+    font-size: 6px;
+    padding: 2px 4px;
   }
 }
