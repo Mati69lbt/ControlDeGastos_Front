@@ -127,7 +127,9 @@ const Compras = () => {
                       </button>
                     </div>
                   </td>
-                  <td>{prod.observacion}</td>
+                  <td style={{ padding: "0px 5px 0px 5px" }}>
+                    {prod.observacion}
+                  </td>
                 </tr>
               );
             })
