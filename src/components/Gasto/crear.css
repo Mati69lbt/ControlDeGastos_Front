@@ -20,6 +20,15 @@
   font-weight: bold;
 }
 
+.checkbox-toggle label {
+  display: inline-block;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+.checkbox-toggle input[type="checkbox"] {
+  margin-right: 0.3rem;
+}
+
 .form_crear input[type="date"],
 .form_crear input[type="text"],
 .form_crear input[type="number"],

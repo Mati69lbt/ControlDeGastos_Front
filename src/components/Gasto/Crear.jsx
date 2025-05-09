@@ -1,20 +1,35 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, descripcion,
+// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, valorNumerico
 
 import useForm from "../../helpers/useForm";
 import { Link, useNavigate } from "react-router-dom";
 import { Global } from "../../helpers/Global";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import "./crear.css";
+import { useState } from "react";
 
 const Crear = () => {
-  const { form, changed } = useForm({});
-
+  const [montoVisible, setMontoVisible] = useState("");
   const navigate = useNavigate();
+
+  const getFechaActual = () => {
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, "0");
+    const dd = String(hoy.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const { form, changed } = useForm({
+    fecha: getFechaActual(),
+    pagadoPor: "Carolina",
+  });
 
   const guardar_Gasto = async (e) => {
     e.preventDefault();
 
     let nuevo_gasto = form;
+
+   // console.log("nuevo_gasto", nuevo_gasto);
 
     try {
       const confirmación = window.confirm(
@@ -40,6 +55,8 @@ const Crear = () => {
     }
   };
 
+
+
   return (
     <div className="container_crear">
       <h1>Nuevo Gasto</h1>
@@ -55,6 +72,7 @@ const Crear = () => {
             name="fecha"
             id="fecha"
             required
+            value={form.fecha}
             onChange={changed}
           />
         </div>
@@ -75,16 +93,55 @@ const Crear = () => {
           <label htmlFor="monto" className="label_crear">
             Monto
           </label>
-          <input
+          {/* <input
             type="number"
             name="monto"
             id="monto"
             onChange={changed}
             step="0.01"
             className="form_crear"
+
+            // nuevo_gasto {fecha: '2025-05-09', lugar: 'Prueba 017', monto: '12584', pagadoPor: 'Matias', observacion: 'Borrar'}
+          /> */}
+          <input
+            type="text"
+            name="monto"
+            id="monto"
+            className="form_crear"
+            value={montoVisible}
+            onChange={(e) => {
+              let valor = e.target.value;
+              valor = valor.replace(/[^\d.,]/g, "");
+              let valorNumerico = valor.replace(",", ".");
+              valorNumerico = valorNumerico.replace(/\./g, "");
+              const partes = valorNumerico.split("");
+              let indexUltimaComa = valor.lastIndexOf(",");
+              if (indexUltimaComa !== -1) {
+                valorNumerico =
+                  valorNumerico.slice(0, -2) + "." + valorNumerico.slice(-2);
+              }
+              const numero = parseFloat(valorNumerico);
+              const valorFinal = isNaN(numero) ? "" : numero.toFixed(2);
+
+              changed({
+                target: {
+                  name: "monto",
+                  value: valorFinal,
+                },
+              });
+
+              const valorFormateado = isNaN(numero)
+                ? ""
+                : `$${Number(valorFinal).toLocaleString("es-AR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}`;
+
+              setMontoVisible(valorFormateado);
+            }}
           />
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="pagadoPor" className="label_crear">
             Pagado por:
           </label>
@@ -99,7 +156,40 @@ const Crear = () => {
             <option value="Carolina">Carolina</option>
             <option value="Matias">Matias</option>
           </select>
+        </div> */}
+        <div>
+          <label className="label_crear">Pagado por:</label>
+          <div className="checkbox-toggle">
+            <label>
+              <input
+                type="checkbox"
+                name="pagadoPor"
+                checked={form.pagadoPor === "Carolina"}
+                onChange={() =>
+                  changed({
+                    target: { name: "pagadoPor", value: "Carolina" },
+                  })
+                }
+              />
+              Carolina
+            </label>
+
+            <label>
+              <input
+                type="checkbox"
+                name="pagadoPor"
+                checked={form.pagadoPor === "Matias"}
+                onChange={() =>
+                  changed({
+                    target: { name: "pagadoPor", value: "Matias" },
+                  })
+                }
+              />
+              Matias
+            </label>
+          </div>
         </div>
+
         <div>
           <label htmlFor="observacion" className="label_crear">
             Observación:
@@ -119,6 +209,7 @@ const Crear = () => {
       <Link to="/home" className="link_crear">
         <button>Volver</button>
       </Link>
+      <p>Version 09-05-2025</p>
     </div>
   );
 };

@@ -16,10 +16,7 @@ const TablaIndividual = ({ nombre, gastos, total, setGastos }) => {
 
       if (data.status === "success") {
         alert(data.message);
-        setGastos_Matias((prevGastos) =>
-          prevGastos.filter((gasto) => gasto._id !== id)
-        );
-        setGastos_Carolina((prevGastos) =>
+        setGastos((prevGastos) =>
           prevGastos.filter((gasto) => gasto._id !== id)
         );
       }
