@@ -209,7 +209,7 @@ const Crear = () => {
       <Link to="/home" className="link_crear">
         <button>Volver</button>
       </Link>
-      <p>Version 09-05-2025</p>
+      <p>Version 13-05-2025</p>
     </div>
   );
 };

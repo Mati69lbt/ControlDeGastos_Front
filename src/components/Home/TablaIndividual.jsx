@@ -28,7 +28,9 @@ const TablaIndividual = ({ nombre, gastos, total, setGastos }) => {
     <table border={1} className="tablaCyM">
       <thead>
         <tr>
-          <th colSpan={6}>{nombre}</th>
+          <th colSpan={6} className="nombre_tabla">
+            {nombre}
+          </th>
         </tr>
         <tr>
           <th>Nº</th>

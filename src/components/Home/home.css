@@ -25,11 +25,21 @@ hr {
 }
 
 .tablaCyM {
-  width: 100%;
+  align-self: flex-start;
+  width: 580px;
+  /* width: 100%;
   min-width: 500px;
-  max-width: 600px;
+  max-width: 600px;*/
   border-collapse: collapse;
   font-size: 14px;
+}
+
+.nombre_tabla {
+  background-color: #f0f0f0;
+  text-align: center;
+  font-size: 16px;
+  padding: 8px;
+  font-weight: bold;
 }
 
 .tablaCyM th,
@@ -60,13 +70,17 @@ hr {
 
 .tablaCyM th:nth-child(5),
 .tablaCyM td:nth-child(5) {
-  width: 5%;
+  width: 10%;
   text-align: center;
 }
 
 .tablaCyM th:nth-child(6),
 .tablaCyM td:nth-child(6) {
-  width: 30%;
+  width: 20%;
+}
+
+.tablaCyM tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
 }
 
 .index_tabla {
@@ -86,21 +100,24 @@ hr {
 
 .btn_celda_edit_elim {
   display: flex;
-  justify-content: space-evenly;
-  gap: 5px;
+  justify-content: center;
+  gap: 6px;
+  padding-top: 2px;
 }
 
 .btn_celda_edit_elim button {
-  font-size: 12px;
-  padding: 2px 6px;
+  min-width: 25px;
+  height: 25px;
 }
+
+
 
 .mes {
   text-align: center;
 }
 .loading-message {
   font-size: 18px;
-color: #007BFF;
+  color: #007bff;
 }
 
 .countdown-container {
