@@ -9,7 +9,10 @@ const getProductos = async (setProductos) => {
     });
     const data = await response.json();
     if (data.status === "success") {
-      setProductos(data.productos);
+      const productosOrdenados = [...data.productos].sort((a, b) =>
+        a.producto.localeCompare(b.producto)
+      );
+      setProductos(productosOrdenados);
     }
   } catch (error) {
     console.log("error", error);

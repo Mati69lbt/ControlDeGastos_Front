@@ -1,4 +1,4 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, valorNumerico
+// cSpell:ignore Matias, observacion, matias, segunditos, descripcion, valorNumerico, Swal, sweetalert2, confirmacion
 
 import useForm from "../../helpers/useForm";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import { Global } from "../../helpers/Global";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import "./crear.css";
 import { useState } from "react";
+import { NumericFormat } from "react-number-format";
+import Swal from "sweetalert2";
 
 const Crear = () => {
   const [montoVisible, setMontoVisible] = useState("");
@@ -28,19 +30,21 @@ const Crear = () => {
     e.preventDefault();
 
     let nuevo_gasto = form;
-
-   // console.log("nuevo_gasto", nuevo_gasto);
-
+    
     try {
-      const confirmación = window.confirm(
-        `${Fecha_Formateada(
-          nuevo_gasto.fecha
-        )}: ¿Esta seguro que quiere guardar un nuevo gasto de ${
-          nuevo_gasto.pagadoPor
-        }, en "${nuevo_gasto.lugar}" por $ ${nuevo_gasto.monto}?`
-      );
+      const confirmacion = await Swal.fire({
+        title: "¿Confirmar gasto?",
+        html: `${Fecha_Formateada(nuevo_gasto.fecha)}<br>
+               ¿Guardar gasto de <strong>${nuevo_gasto.pagadoPor}</strong> en 
+               "<strong>${nuevo_gasto.lugar}</strong>" por 
+               <strong>$${nuevo_gasto.monto}</strong>?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Guardar",
+        cancelButtonText: "Cancelar",
+      });
 
-      if (confirmación) {
+      if (confirmacion.isConfirmed) {
         const response = await fetch(Global.url_backend + "/crear", {
           method: "POST",
           body: JSON.stringify(nuevo_gasto),
@@ -49,17 +53,15 @@ const Crear = () => {
           },
         });
         navigate(-1);
-      } else return;
+      }
     } catch (error) {
       console.log("error", error);
     }
   };
 
-
-
   return (
     <div className="container_crear">
-      <h1>Nuevo Gasto</h1>
+      <h1>Nuevo Gasto punto</h1>
       <form action="" onSubmit={guardar_Gasto} className="form_crear">
         <div>
           <label htmlFor="fecha" className="label_crear">
@@ -93,102 +95,62 @@ const Crear = () => {
           <label htmlFor="monto" className="label_crear">
             Monto
           </label>
-          {/* <input
-            type="number"
-            name="monto"
+          <NumericFormat
+            placeholder="Ingrese monto"
             id="monto"
-            onChange={changed}
-            step="0.01"
-            className="form_crear"
-
-            // nuevo_gasto {fecha: '2025-05-09', lugar: 'Prueba 017', monto: '12584', pagadoPor: 'Matias', observacion: 'Borrar'}
-          /> */}
-          <input
-            type="text"
             name="monto"
-            id="monto"
             className="form_crear"
+            thousandSeparator="."
+            decimalSeparator=","
+            prefix="$ "
+            allowNegative={false}
+            decimalScale={2}
+            fixedDecimalScale
+            inputMode="decimal"
             value={montoVisible}
-            onChange={(e) => {
-              let valor = e.target.value;
-              valor = valor.replace(/[^\d.,]/g, "");
-              let valorNumerico = valor.replace(",", ".");
-              valorNumerico = valorNumerico.replace(/\./g, "");
-              const partes = valorNumerico.split("");
-              let indexUltimaComa = valor.lastIndexOf(",");
-              if (indexUltimaComa !== -1) {
-                valorNumerico =
-                  valorNumerico.slice(0, -2) + "." + valorNumerico.slice(-2);
-              }
-              const numero = parseFloat(valorNumerico);
-              const valorFinal = isNaN(numero) ? "" : numero.toFixed(2);
-
+            onValueChange={({ floatValue, formattedValue }) => {
+              setMontoVisible(formattedValue);
               changed({
                 target: {
                   name: "monto",
-                  value: valorFinal,
+                  value: floatValue ?? "",
                 },
               });
-
-              const valorFormateado = isNaN(numero)
-                ? ""
-                : `$${Number(valorFinal).toLocaleString("es-AR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}`;
-
-              setMontoVisible(valorFormateado);
             }}
           />
         </div>
-        {/* <div>
-          <label htmlFor="pagadoPor" className="label_crear">
-            Pagado por:
-          </label>
-          <select
-            name="pagadoPor"
-            className="form_crear"
-            id="pagadoPor"
-            required
-            onChange={changed}
-          >
-            <option value="">Seleccionar</option>
-            <option value="Carolina">Carolina</option>
-            <option value="Matias">Matias</option>
-          </select>
-        </div> */}
         <div>
-          <label className="label_crear">Pagado por:</label>
-          <div className="checkbox-toggle">
-            <label>
-              <input
-                type="checkbox"
-                name="pagadoPor"
-                checked={form.pagadoPor === "Carolina"}
-                onChange={() =>
-                  changed({
-                    target: { name: "pagadoPor", value: "Carolina" },
-                  })
-                }
-              />
-              Carolina
-            </label>
+  <label className="label_crear">Pagado por:</label>
+  <div className="checkbox-toggle">
+    <label>
+      <input
+        type="checkbox"
+        name="pagadoPor"
+        checked={(form.pagadoPor || gasto.pagadoPor) === "Carolina"}
+        onChange={() =>
+          changed({
+            target: { name: "pagadoPor", value: "Carolina" },
+          })
+        }
+      />
+      Carolina
+    </label>
 
-            <label>
-              <input
-                type="checkbox"
-                name="pagadoPor"
-                checked={form.pagadoPor === "Matias"}
-                onChange={() =>
-                  changed({
-                    target: { name: "pagadoPor", value: "Matias" },
-                  })
-                }
-              />
-              Matias
-            </label>
-          </div>
-        </div>
+    <label>
+      <input
+        type="checkbox"
+        name="pagadoPor"
+        checked={(form.pagadoPor || gasto.pagadoPor) === "Matias"}
+        onChange={() =>
+          changed({
+            target: { name: "pagadoPor", value: "Matias" },
+          })
+        }
+      />
+      Matias
+    </label>
+  </div>
+</div>
 
         <div>
           <label htmlFor="observacion" className="label_crear">
@@ -209,7 +171,7 @@ const Crear = () => {
       <Link to="/home" className="link_crear">
         <button>Volver</button>
       </Link>
-      <p>Version 13-05-2025</p>
+      <p>Version 30-05-2025</p>
     </div>
   );
 };

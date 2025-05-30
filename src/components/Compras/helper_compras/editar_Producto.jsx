@@ -1,4 +1,5 @@
 import { Global } from "../../../helpers/Global";
+import { toast } from "react-toastify";
 
 const editar_Producto = async (
   form,
@@ -22,7 +23,7 @@ const editar_Producto = async (
     const data = await response.json();
 
     if (data.status === "success") {
-      alert("Producto Actualizado");
+      toast.success("Producto editado correctamente");      
       setProductos((prevProductos) =>
         prevProductos.map((prod) =>
           prod._id === idProducto ? { ...prod, ...productoEditado } : prod
@@ -31,6 +32,7 @@ const editar_Producto = async (
       setProductoBuscado([]);
     }
   } catch (error) {
+    toast.error("Error al editar el producto");
     console.log("error", error);
   }
 };

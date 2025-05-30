@@ -1,4 +1,5 @@
 import { Global } from "../../../helpers/Global";
+import { toast } from "react-toastify";
 
 const borrar_ListaDeCompras = async (setProductos) => {
   try {
@@ -13,10 +14,11 @@ const borrar_ListaDeCompras = async (setProductos) => {
     );
     const data = await response.json();
     if (data.status === "success") {
-      alert(data.mensaje);
+      toast.success(data.mensaje);
       setProductos([]);
     }
   } catch (error) {
+    toast.error("Error al eliminar la lista de compras");
     console.log("error", error);
   }
 };

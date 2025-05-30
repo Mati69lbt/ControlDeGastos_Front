@@ -1,7 +1,9 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, Elim, elim
+// cSpell:ignore Matias, observacion, matias, segunditos, Elim, elim, Swal, sweetalert2
 import { Link } from "react-router-dom";
 import Fecha_Formateada from "../../helpers/Fecha_Formateada";
 import { Global } from "../../helpers/Global";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const TablaIndividual = ({ nombre, gastos, total, setGastos }) => {
   const borrarGasto = async (id) => {
@@ -15,7 +17,7 @@ const TablaIndividual = ({ nombre, gastos, total, setGastos }) => {
       const data = await request.json();
 
       if (data.status === "success") {
-        alert(data.message);
+        toast.success(data.message);
         setGastos((prevGastos) =>
           prevGastos.filter((gasto) => gasto._id !== id)
         );
@@ -68,12 +70,18 @@ const TablaIndividual = ({ nombre, gastos, total, setGastos }) => {
                   </Link>
                   <button
                     onClick={() => {
-                      const confirmBorrar = window.confirm(
-                        "¿Desea eliminar este gasto?"
-                      );
-                      if (confirmBorrar) {
-                        borrarGasto(item._id);
-                      }
+                      Swal.fire({
+                        title: "¿Eliminar gasto?",
+                        text: "Esta acción no se puede deshacer.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonText: "Eliminar",
+                        cancelButtonText: "Cancelar",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          borrarGasto(item._id);
+                        }
+                      });
                     }}
                   >
                     X

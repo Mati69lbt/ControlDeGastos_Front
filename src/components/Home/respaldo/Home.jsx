@@ -1,4 +1,4 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, Resetear
+// cSpell:ignore Matias, observacion, matias, segunditos, Resetear, confirmacion, Swal, sweetalert2
 
 import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
@@ -8,6 +8,9 @@ import html2canvas from "html2canvas";
 import Resetear_Tabla from "../../helpers/Resetear_Tabla";
 import "./home.css";
 import frase from "../../helpers/Frases";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -69,12 +72,23 @@ const Home = () => {
 
   const cerrarMes = async () => {
     try {
-      const confirmación = window.confirm("¿Está seguro de finalizar el mes?");
-      if (confirmación) {
+      const confirmacion = await Swal.fire({
+        title: "¿Cerrar mes?",
+        text: "Se guardará una captura de pantalla y se reiniciarán los datos.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cerrar mes",
+        cancelButtonText: "Cancelar",
+      });
+
+      if (!confirmacion.isConfirmed) return;
+      if (confirmacion) {
         const screenshot = await captureScreen();
 
         if (!screenshot) {
-          alert("La captura de pantalla no está lista.");
+          toast.error("Error al capturar la pantalla.");
           return;
         }
 
@@ -175,12 +189,11 @@ const Home = () => {
       <hr />
       {loading ? (
         <div>
-          {
-            conteo > 110 &&
-          <p className="loading-message">
-            Cargando Datos... Espero unos segunditos...
-          </p>
-          }
+          {conteo > 110 && (
+            <p className="loading-message">
+              Cargando Datos... Espero unos segunditos...
+            </p>
+          )}
           <p className="loading-message">{mensaje}</p>
           <div className="countdown-container">
             <p className="countdown-label">Tiempo restante:</p>

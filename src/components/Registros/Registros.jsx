@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
 import { Link } from "react-router-dom";
 import "./registros.css";
+import { toast } from "react-toastify";
 
 const Registros = () => {
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,7 @@ const Registros = () => {
       if (data.status === "success") {
         setRegistros(data.capturas);
       } else {
-        alert("Error al obtener los registros");
+        toast.error("Error al obtener los registros");        
       }
     } catch (error) {
       console.log("error", error);

@@ -1,4 +1,4 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, Resetear
+// cSpell:ignore Matias, observacion, matias, segunditos, Resetear, Swal, sweetalert2, confirmacion, 
 
 import { useEffect, useState } from "react";
 import { Global } from "../../helpers/Global";
@@ -8,6 +8,8 @@ import html2canvas from "html2canvas";
 import Resetear_Tabla from "../../helpers/Resetear_Tabla";
 import "./home.css";
 import frase from "../../helpers/Frases";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const Home = () => {
   const [gastos_Matias, setGastos_Matias] = useState([]);
@@ -69,12 +71,21 @@ const Home = () => {
 
   const cerrarMes = async () => {
     try {
-      const confirmación = window.confirm("¿Está seguro de finalizar el mes?");
-      if (confirmación) {
+      const confirmacion = await Swal.fire({
+        title: "¿Cerrar mes?",
+        text: "Se guardará una captura y se reiniciarán los datos.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Cerrar mes",
+        cancelButtonText: "Cancelar",
+      });
+      if (!confirmacion.isConfirmed) return;
+
+      if (confirmacion) {
         const screenshot = await captureScreen();
 
         if (!screenshot) {
-          alert("La captura de pantalla no está lista.");
+          toast.error("Error al capturar la pantalla.");
           return;
         }
 
@@ -258,6 +269,9 @@ const Home = () => {
         </Link>
         <Link to="/compras">
           <button className="btn_gasto">Lista de Compras</button>
+        </Link>
+        <Link to="/crear">
+          <button className="btn_gasto">Nuevo Gasto</button>
         </Link>
       </div>
       <hr />

@@ -1,9 +1,10 @@
-// cSpell:ignore Matias, observacion, matias, segunditos, Elim
+// cSpell:ignore Matias, observacion, matias, segunditos, Elim, swal, index_produc, sweetalert2, btn_celda_edit_elim
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import getProductos from "./helper_compras/getProductos";
 import useForm from "../../helpers/useForm";
 import "./compras.css";
+import Swal from "sweetalert2";
 
 import borrar_Producto from "./helper_compras/borrar_Producto";
 import guardar_Producto from "./helper_compras/guardar_Producto";
@@ -54,14 +55,18 @@ const Compras = () => {
   };
 
   return (
-    <div>
+    <div className="container_compras">
       <h1>Lista de Compras</h1>
       <Link to="/home">
         <button className="btn_gasto">Control de Gastos</button>
       </Link>
       <hr />
       <h3>Agregar Producto a la Lista de Compras</h3>
-      <form action="" onSubmit={handleGuardarProducto} className="form_crear">
+      <form
+        action=""
+        onSubmit={handleGuardarProducto}
+        className="formulario_compras"
+      >
         <div>
           <label htmlFor="producto">Producto</label>
           <input
@@ -86,7 +91,7 @@ const Compras = () => {
         <input type="submit" value="Agregar" className="btn_gasto" />
       </form>
       <hr />
-      <table border={"2"} className="tabla-compras">
+      <table border={"2"} className="tabla_compras_mejorada">
         <thead>
           <tr>
             <th></th>
@@ -106,7 +111,10 @@ const Compras = () => {
               return (
                 <tr key={prod._id}>
                   <td className="index_produc">{index + 1}</td>
-                  <td className="prod_tabla">{prod.producto}</td>
+                  <td className="prod_tabla">
+                    {prod.producto.charAt(0).toUpperCase() +
+                      prod.producto.slice(1)}
+                  </td>
                   <td>
                     <div className="btn_celda_edit_elim">
                       <button onClick={() => handleBuscarProducto(prod._id)}>
@@ -115,12 +123,20 @@ const Compras = () => {
 
                       <button
                         onClick={() => {
-                          const confirmBorrar = window.confirm(
-                            `¿Desea eliminar este producto:  ${prod.producto}?`
-                          );
-                          if (confirmBorrar) {
-                            borrar_Producto(prod._id, setProductos);
-                          }
+                          Swal.fire({
+                            title: "¿Estás seguro?",
+                            text: `Vas a eliminar "${prod.producto}"`,
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#d33",
+                            cancelButtonColor: "#3085d6",
+                            confirmButtonText: "Sí, eliminar",
+                            cancelButtonText: "Cancelar",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              borrar_Producto(prod._id, setProductos);
+                            }
+                          });
                         }}
                       >
                         X
@@ -172,16 +188,25 @@ const Compras = () => {
       <hr />
       <button
         onClick={() => {
-          const confirmBorrar = window.confirm(
-            "¿Desea eliminar toda la lista?"
-          );
-          if (confirmBorrar) {
-            eliminar_ListaDeCompras();
-          }
+          Swal.fire({
+            title: "¿Eliminar toda la lista?",
+            text: "Esta acción no se puede deshacer.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar todo",
+            cancelButtonText: "Cancelar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              eliminar_ListaDeCompras();
+            }
+          });
         }}
       >
         Eliminar Tabla
       </button>
+
       <hr />
     </div>
   );
